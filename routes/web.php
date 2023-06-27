@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RepairController;
 use App\Http\Controllers\ReportController;
@@ -44,6 +45,17 @@ Route::get('reports/', [ReportController::class, 'index'])->name('reports.index'
 //repairs 
 Route::get('reparacion/', [RepairController::class, 'index'])->name('repair.index')->middleware('auth');
 Route::post('reparacion/crear', [RepairController::class, 'store'])->name('repair.store')->middleware('auth');
+Route::delete('reparacion/eliminar/{repair}', [RepairController::class, 'destroy'])->name('repair.destroy')->middleware('auth');
+Route::get('reparacion/modificar-estado-terminado/{repair}', [RepairController::class, 'doneState'])->name('repair.doneState')->middleware('auth');
+Route::get('reparacion/modificar-estado-en-proceso/{repair}', [RepairController::class, 'processState'])->name('repair.processState')->middleware('auth');
+Route::get('reparacion/modificar-estado-pendiente/{repair}', [RepairController::class, 'pendingState'])->name('repair.pendingState')->middleware('auth');
+
+
+//client
+Route::get('clientes/', [ClientController::class, 'index'])->name('client.index')->middleware('auth');
+Route::post('clientes/crear', [ClientController::class, 'store'])->name('client.store')->middleware('auth');
+Route::delete('clientes/eliminar/{client}', [ClientController::class, 'destroy'])->name('client.destroy')->middleware('auth');
+
 
 //export
 Route::get('producto/exportar', [ProductController::class, 'exportPDF'])->name('product.export')->middleware('auth');

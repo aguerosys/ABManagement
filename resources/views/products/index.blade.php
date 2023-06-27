@@ -88,7 +88,7 @@
 
     <div class="container">
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead-dark table-dark">
                 <tr>
                     <th scope="col">Codigo</th>
                     <th scope="col">Producto</th>

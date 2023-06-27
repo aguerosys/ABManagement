@@ -49,8 +49,8 @@
                 <div class="transform">
                     <img class="img-main " src="img/stock.png" alt="Card image cap">
                     <div class="card-body">
-                        <h4 class="card-title">Productos</h4>
-                        <p class="card-text">Aquí podrás gestionar tus productos, agregar stock, descontar stock, entre otras funcionalidades.</p>
+                        <h4 class="card-title">Stock</h4>
+                        <p class="card-text">Aquí podrás gestionar tus respuestos, agregar stock, descontar stock, entre otras funcionalidades.</p>
                     
                     </div>
                 </div>
@@ -68,7 +68,7 @@
         </div>
 
         <div class="card-group">
-        <a href="{{ route('product.index') }}" class="card pointer ">
+        <a href="{{ route('client.index') }}" class="card pointer ">
                 <div class="transform">
                     <img class="img-main " src="img/clientes.png" alt="Card image cap">
                     <div class="card-body">

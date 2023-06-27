@@ -4,7 +4,7 @@
 
 <div class="container">
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead-dark table-dark">
                 <tr>
                     <th scope="col">Nombre del reporte</th>
                     <th scope="col">Cantidad</th>

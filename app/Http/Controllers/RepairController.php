@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\ClientRepair;
 use App\Models\Repair;
+use App\Services\GeneratorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RepairController extends Controller
 {
@@ -15,8 +19,11 @@ class RepairController extends Controller
     public function index()
     {
         //
-        $repairs = Repair::all();
-        return view('repairs/index', compact('repairs'));
+        $clients = Client::all();
+        $repairs = Repair::orderBy('id','ASC')->get();
+
+        
+        return view('repairs/index', compact('repairs', 'clients'));
     }
 
     /**
@@ -38,6 +45,39 @@ class RepairController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'description' => 'required',
+            'category' => 'required'
+        ]);
+
+
+        $repairCreate = Repair::create([
+            'code' => $request->code,
+            'description' => $request->description,
+            'details' => $request->details,
+            'price' => $request->price,
+            'category' => $request->category,
+            'client' => $request->client,
+            'status' => 'Pendiente'
+        ]);
+
+
+        $generator = new GeneratorService();
+        $code = $generator->codeGenerator($request->category, $repairCreate->id);
+
+        Repair::where('id', $repairCreate->id)->update([
+            'code' => $code
+        ]);
+        
+
+       //$code = $request->code;
+       //$repair = Repair::where('code', $code)->first()->clients()->attach($request->client);
+       
+
+        
+        
+
+        return back();
     }
 
     /**
@@ -83,5 +123,42 @@ class RepairController extends Controller
     public function destroy(Repair $repair)
     {
         //
+
+        $repair->delete();
+
+        return back();
     }
+    public function doneState(Repair $repair)
+    {
+        //
+
+        $repair->update([
+            'status' => 'Terminado'
+        ]);
+        
+        return back();
+    }
+
+    public function processState(Repair $repair)
+    {
+        //
+
+        $repair->update([
+            'status' => 'En proceso'
+        ]);
+
+        return back();
+    }
+
+    public function pendingState(Repair $repair)
+    {
+        //
+
+        $repair->update([
+            'status' => 'Pendiente'
+        ]);
+
+        return back();
+    }
+
 }
