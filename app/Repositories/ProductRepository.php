@@ -9,6 +9,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateAmountProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\Report;
+use App\Services\GeneratorService;
 
 class ProductRepository
 {
@@ -21,12 +23,19 @@ class ProductRepository
     
     public function store(StoreProductRequest $request)
     {
-        return $this->modelProduct->create([
+
+        $store = $this->modelProduct->create([
             'user_id' => auth()->user()->id,
-            'code' => $request->code,
             'name' => $request->name,
             'category' => $request->category,
             'amount' => $request->amount
+        ]);
+
+        $generatorCode = new GeneratorService();
+        $code = $generatorCode->codeGenerator($request->category, $store->id);
+
+        $store->update([
+            'code' => $code
         ]);
 
     }
@@ -50,11 +59,33 @@ class ProductRepository
         ]);
     }
 
-    public function addAmount(UpdateAmountProductRequest $request){
+    public function addAmount(UpdateAmountProductRequest $request, Product $product){
 
-        return $this->modelProduct->update([
-            'amount' => ($this->modelProduct->amount + $request->amount)
+        return $product->update([
+            'amount' => ($product->amount + $request->amount)
         ]);
+
+    }
+
+    public function amountUpdate(UpdateAmountProductRequest $request, Product $product, Report $report)
+    {
+
+        $resta = (int)$product->amount - (int)$request->amount;
+        if(!($resta < 0)){
+
+            $product->update([
+                'amount' => $resta
+            ]);
+
+            Report::create([
+                'name' => 'Se quito/vendio stock a '. $product->name,
+                'amountSold' => $request->amount
+            ]);
+    
+            return true;
+        }else{
+            return false;
+        }
 
     }
 

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
 
-            $table->string('code')->unique();
-            $table->string('name')->unique();
+            $table->string('code')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->string('category');
             $table->string('amount');
             $table->string('image')->nullable();

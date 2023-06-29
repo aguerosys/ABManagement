@@ -34,7 +34,7 @@
                         @csrf
                             <div class="mb-3">
                                 <label for="inputCode" class="form-label">Codigo del producto</label>
-                                <input type="text" class="form-control" aria-describedby="inputCodehelp" name="code">
+                                <input type="text" class="form-control" aria-describedby="inputCodehelp" name="code" disabled>
                                 <div id="inputCodehelp" class="form-text">Coloque el codigo del producto</div>
                             </div>
                             <div class="mb-3">

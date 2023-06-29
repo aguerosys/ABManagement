@@ -28,8 +28,9 @@ class ProductController extends Controller
         return view('products/index', compact('products'));
     }
 
-    public function store(StoreProductRequest $request, Report $report)
+    public function store(StoreProductRequest $request)
     {
+        
         $this->productRepository->store($request);
 
         Report::create([
@@ -57,7 +58,7 @@ class ProductController extends Controller
 
     public function addAmount(UpdateAmountProductRequest $request, Product $product){
 
-        $this->productRepository->addAmount($request);
+        $this->productRepository->addAmount($request, $product);
 
         Report::create([
             'name' => 'Se agrego mas stock a '. $product->name,
@@ -68,25 +69,15 @@ class ProductController extends Controller
     }
 
     
-    public function amountUpdate(Request $request, Product $product, Report $report)
+    public function amountUpdate(UpdateAmountProductRequest $request, Product $product, Report $report)
     {
+        
+        $update = $this->productRepository->amountUpdate($request, $product, $report);
 
-        $resta = (int)$product->amount - (int)$request->amount;
-        if(!($resta < 0)){
-
-            $product->update([
-                'amount' => $resta
-            ]);
-
-            Report::create([
-                'name' => 'Se quito/vendio stock a '. $product->name,
-                'amountSold' => $request->amount
-            ]);
-    
-            return redirect('/producto')->with('status', 'Se desconto correctamente el stock del producto');
+        if($update == true){
+            return redirect('/producto')->with('status', 'Se actualizo el stock correctamente con exito');
         }else{
-            return redirect('/producto')->with('status', 'El producto no tiene la cantidad que se le esta quitando');
-
+            return redirect('/producto')->with('status', 'No se puede actualizar el stock, ya que la cantidad a vender es mayor a la cantidad en stock');
         }
 
     }

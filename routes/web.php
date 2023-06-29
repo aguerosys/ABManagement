@@ -17,19 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::prefix('producto')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('product.index');
+        Route::post('crear', [ProductController::class, 'store'])->name('product.store');
+        Route::delete('eliminar/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+        Route::get('modificar/{product}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::post('modificar/{product}', [ProductController::class, 'amountUpdate'])->name('product.amountUpdate');
+        Route::post('modificar-general/{product}', [ProductController::class, 'update'])->name('product.update');
+        Route::get('agregar/{product}', [ProductController::class, 'viewAmount'])->name('product.viewAmount');
+        Route::post('agregar/{product}', [ProductController::class, 'addAmount'])->name('product.addAmount');
+    });
+});
+
 Route::get('/', function(){
     return view('main');
 })->middleware('auth');
-
-Route::get('producto/', [ProductController::class, 'index'])->name('product.index')->middleware('auth');
-
-Route::post('producto/crear', [ProductController::class, 'store'])->name('product.store')->middleware('auth');
-Route::delete('producto/eliminar/{product}', [ProductController::class, 'destroy'])->name('product.destroy')->middleware('auth');
-Route::get('producto/modificar/{product}', [ProductController::class, 'edit'])->name('product.edit')->middleware('auth');
-Route::post('producto/modificar/{product}', [ProductController::class, 'amountUpdate'])->name('product.amountUpdate')->middleware('auth');
-Route::post('producto/modificar-general/{product}', [ProductController::class, 'update'])->name('product.update')->middleware('auth');
-Route::get('producto/agregar/{product}', [ProductController::class, 'viewAmount'])->name('product.viewAmount')->middleware('auth');
-Route::post('producto/agregar/{product}', [ProductController::class, 'addAmount'])->name('product.addAmount')->middleware('auth');
 
 
 Auth::routes();
