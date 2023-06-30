@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Report;
-
+use Barryvdh\DomPDF\PDF;
 
 class ReportRepository
 {
@@ -21,5 +21,13 @@ class ReportRepository
         return $this->modelReport->all();
     }   
     
+    public function exportPDF(Report $report){
+
+        $reports = $report->all();
+
+        $pdf = PDF::loadView('pdf.reports', compact('reports'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->download('reports-list.pdf');
+    }
     
 }
