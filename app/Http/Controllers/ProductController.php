@@ -9,16 +9,19 @@ use App\Models\Product;
 use App\Models\Report;
 use App\Models\Stock;
 use App\Repositories\ProductRepository;
+use App\Repositories\ReportRepository;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ProductController extends Controller
 {
     protected ProductRepository $productRepository;
+    protected ReportRepository $reportRepository;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ReportRepository $reportRepository)
     {
         $this->productRepository = $productRepository;
+        $this->reportRepository = $reportRepository;
     }
 
     public function index()
@@ -88,12 +91,8 @@ class ProductController extends Controller
         return back();
     }
 
-    public function exportPDF(Report $report){
+    public function exportPDF(){
 
-        $reports = $report->all();
-
-        $pdf = PDF::loadView('pdf.reports', compact('reports'))->setOptions(['defaultFont' => 'sans-serif']);
-
-        return $pdf->download('reports-list.pdf');
+        return $this->reportRepository->exportPDF();
     }
 }
