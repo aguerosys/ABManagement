@@ -36,10 +36,7 @@ class ProductController extends Controller
         
         $this->productRepository->store($request);
 
-        Report::create([
-            'name' => 'Se creo el producto: ' . $request->name,
-            'amount' => $request->amount
-        ]);
+        $this->reportRepository->createReport('Se creo el producto: ' . $request->name, $request->amount);
 
         return back();
     }
@@ -63,10 +60,7 @@ class ProductController extends Controller
 
         $this->productRepository->addAmount($request, $product);
 
-        Report::create([
-            'name' => 'Se agrego mas stock a '. $product->name,
-            'amountAdd' => $request->amount
-        ]);
+        $this->reportRepository->createReport('Se agrego mas stock a ' . $product->name, $request->amount);
         
         return redirect('/producto')->with('status', 'Se actualizo el stock correctamente con exito');
     }

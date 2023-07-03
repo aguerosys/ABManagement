@@ -18,7 +18,7 @@ class ReportRepository
 
     public function index()
     {
-        return $this->modelReport->all();
+        return $this->modelReport->orderBy('created_at', 'desc')->get();
     }   
     
     public function exportPDF(){
@@ -28,6 +28,14 @@ class ReportRepository
         $pdf = PDF::loadView('pdf.reports', compact('reports'))->setOptions(['defaultFont' => 'sans-serif']);
 
         return $pdf->download('reports-list.pdf');
+    }
+
+    public function createReport($name, $amount)
+    {
+        return $this->modelReport->create([
+            'name' => $name,
+            'amount' => $amount
+        ]);
     }
     
 }

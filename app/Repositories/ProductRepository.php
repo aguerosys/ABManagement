@@ -11,14 +11,17 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Report;
 use App\Services\GeneratorService;
+use App\Repositories\ReportRepository;
 
 class ProductRepository
 {
     protected Product $modelProduct;
+    protected ReportRepository $reportRepository;
 
-    public function __construct(Product $modelProduct)
+    public function __construct(Product $modelProduct, ReportRepository $reportRepository)
     {
-        $this->modelProduct = $modelProduct;    
+        $this->modelProduct = $modelProduct;  
+        $this->reportRepository = $reportRepository;  
     }
     
     public function store(StoreProductRequest $request)
@@ -42,7 +45,7 @@ class ProductRepository
 
     public function all()
     {
-        return $this->modelProduct->all();
+        return $this->modelProduct->orderBy('created_at', 'desc')->get();
 
     }
 
@@ -77,10 +80,7 @@ class ProductRepository
                 'amount' => $resta
             ]);
 
-            Report::create([
-                'name' => 'Se quito/vendio stock a '. $product->name,
-                'amountSold' => $request->amount
-            ]);
+            $this->reportRepository->createReport('Se quito/vendio stock a ' . $product->name, $request->amount);
     
             return true;
         }else{
