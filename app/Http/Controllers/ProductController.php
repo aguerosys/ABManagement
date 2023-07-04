@@ -36,8 +36,6 @@ class ProductController extends Controller
         
         $this->productRepository->store($request);
 
-        $this->reportRepository->createReport('Se creo el producto: ' . $request->name, $request->amount);
-
         return back();
     }
 
