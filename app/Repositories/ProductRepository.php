@@ -40,7 +40,7 @@ class ProductRepository
         $store->update([
             'code' => $code
         ]);
-
+        $this->reportRepository->createReport('Se creo el producto: ' . $request->name, $request->amount);
     }
 
     public function all()
