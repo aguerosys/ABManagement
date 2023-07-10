@@ -2,60 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected CategoryRepository $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;  
+    }
     
     public function index()
     {
-        //
-        $categories = Category::all();
+        $categories = $this->categoryRepository->index();
         return view('categories/index', compact('categories'));
     }
 
     public function create()
     {
-        //
         return view('categories/create');
     }
 
    
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
-        $request->validate([
-            'name' => 'required'
-        ]);
-
-        Category::create([
-            'name' => $request->name
-        ]);
-
+        $this->categoryRepository->store($request);
         return redirect()->route('categories/index');
     }
 
- 
-    public function show(Category $category)
-    {
-        //
-    }
-
-    public function edit(Category $category)
-    {
-        //
-    }
-
-
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-
-    public function destroy(Category $category)
-    {
-        //
-    }
 }
