@@ -30,4 +30,13 @@ class StoreProductRequest extends FormRequest
         
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'El campo nombre es requerido',
+            'code.required' => 'El campo codigo es requerido',
+            'amount.required' => 'El campo cantidad es requerido'
+        ];
+    }
 }

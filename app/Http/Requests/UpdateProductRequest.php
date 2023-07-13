@@ -29,4 +29,12 @@ class UpdateProductRequest extends FormRequest
         
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'El campo nombre es requerido',
+            'code.required' => 'El campo codigo es requerido'
+        ];
+    }
 }

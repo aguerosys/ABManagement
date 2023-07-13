@@ -29,4 +29,12 @@ class StoreCategoryRequest extends FormRequest
         
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'El nombre de la categoria es requerido',
+            'description.nullable' => 'La descripción de la categoria es opcional'
+        ];
+    }
 }

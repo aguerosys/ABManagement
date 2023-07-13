@@ -28,4 +28,11 @@ class UpdateAmountProductRequest extends FormRequest
         
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'amount.required' => 'El campo cantidad es requerido'
+        ];
+    }
 }

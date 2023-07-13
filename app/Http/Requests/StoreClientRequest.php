@@ -32,4 +32,15 @@ class StoreClientRequest extends FormRequest
         
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'lastname.required' => 'El campo apellido es requerido',
+            'firstname.required' => 'El campo nombre es requerido',
+            'email.required' => 'El campo email es requerido',
+            'phone.required' => 'El campo telefono es requerido',
+            'address.required' => 'El campo direccion es requerido'
+        ];
+    }
 }
