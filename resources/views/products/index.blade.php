@@ -44,12 +44,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputCategory" class="form-label">Categoria</label>
-                                <select name="category" id="" class="form-select">
-                                    <option value="alimentos">Alimentos</option>
-                                    <option value="lacteos">Lacteos</option>
-                                    <option value="cigarillos">Cigarrillos</option>
-                                    <option value="otros"> Otros</option>
+                                <select name="category_id" id="inputCategory" class="form-select">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id}}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
+
                                 <div id="inputCategoryHelp" class="form-text">Coloque la cantidad</div>
                             </div>
                             <div class="mb-3">
@@ -108,7 +108,7 @@
                 <tr>                
                     <td>{{$product->code}}</td>
                     <td>{{$product->name}}</td>
-                    <td>{{ucfirst($product->category); }}</td>
+                    <td>{{ucfirst($product->category->name); }}</td>
                     <td>{{$product->amount}}</td>
                     <td class="">
                      

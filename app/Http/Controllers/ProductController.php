@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateAmountProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Report;
 use App\Models\Stock;
@@ -26,9 +27,10 @@ class ProductController extends Controller
 
     public function index()
     {
+        $categories = Category::all();
         $products = $this->productRepository->all();
 
-        return view('products/index', compact('products'));
+        return view('products/index', compact('products', 'categories'));
     }
 
     public function store(StoreProductRequest $request)

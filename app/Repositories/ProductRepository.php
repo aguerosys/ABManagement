@@ -8,6 +8,7 @@ namespace App\Repositories;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateAmountProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Report;
 use App\Services\GeneratorService;
@@ -30,12 +31,15 @@ class ProductRepository
         $store = $this->modelProduct->create([
             'user_id' => auth()->user()->id,
             'name' => $request->name,
-            'category' => $request->category,
+            'category_id' => $request->category_id,
             'amount' => $request->amount
         ]);
 
+
+        $categoryName = Category::where('id', $request->category_id)->pluck('name')->first();
+
         $generatorCode = new GeneratorService();
-        $code = $generatorCode->codeGenerator($request->category, $store->id);
+        $code = $generatorCode->codeGenerator($categoryName, $store->id);
 
         $store->update([
             'code' => $code

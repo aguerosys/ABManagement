@@ -26,7 +26,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required'],
             'code' => ['nullable'],
-            'amount' => ['required']
+            'amount' => ['required'],
+            'category_id' => ['required'],
         
         ];
     }
@@ -36,7 +37,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name.required' => 'El campo nombre es requerido',
             'code.required' => 'El campo codigo es requerido',
-            'amount.required' => 'El campo cantidad es requerido'
+            'amount.required' => 'El campo cantidad es requerido',
+            'category_id.required' => 'El campo categoria es requerido',
         ];
     }
 }

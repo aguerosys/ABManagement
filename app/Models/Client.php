@@ -18,6 +18,6 @@ class Client extends Model
     ];
 
     public function repairs(){
-        return $this->belongsToMany(Repair::class, 'client_repairs');
+        return $this->hasMany(Repair::class);
     }
 }

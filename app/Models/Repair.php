@@ -21,6 +21,10 @@ class Repair extends Model
     ];
 
     public function clients(){
-        return $this->belongsToMany(Client::class, 'client_repairs');
+        return $this->belongsToMany(Client::class);
     }
+
+    /* public function category(){
+        return $this->belongsTo(Category::class);
+    } */
 }
