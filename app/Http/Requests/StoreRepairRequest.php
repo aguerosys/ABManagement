@@ -35,10 +35,8 @@ class StoreRepairRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo nombre es requerido',
-            'code.required' => 'El campo codigo es requerido',
-            'amount.required' => 'El campo cantidad es requerido',
-            'category_id.required' => 'El campo categoria es requerido',
+            'description.required' => 'La descripción es requerida',
+            'category.required' => 'La categoría es requerida',
         ];
     }
 }

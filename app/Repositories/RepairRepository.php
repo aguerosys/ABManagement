@@ -26,7 +26,6 @@ class RepairRepository
     {
 
         $repairCreate = $this->modelRepair->create([
-            'code' => $request->code,
             'description' => $request->description,
             'details' => $request->details,
             'price' => $request->price,
