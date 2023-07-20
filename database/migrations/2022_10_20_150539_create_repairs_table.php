@@ -15,19 +15,16 @@ return new class extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->id();
-            
            $table->unsignedBigInteger('client_id');
-        //    $table->unsignedBigInteger('category_id');
 
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->string('description');
-            $table->string('details');
-            $table->float('price');
-            $table->string('status');
+            $table->string('details')->nullable();
+            $table->float('price')->nullable();
+            $table->string('status')->nullable();
             $table->string('category');
 
             $table->foreign('client_id')->references('id')->on('clients');
-            // $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
