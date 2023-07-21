@@ -65,9 +65,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputClient" class="form-label">Cliente</label>
-                                <select name="client" id="" class="form-select">
+                                <select name="client_id" id="client_id" class="form-select">
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->lastname . ' ' . $client->firstname }}">{{ $client->firstname . ', ' . $client->lastname }}</option>
+                                        <option value="{{ $client->id}}">{{ $client->firstname . ', ' . $client->lastname }}</option>
                                     @endforeach
                                 </select>
                                 <div id="inputCategoryHelp" class="form-text">Seleccione el cliente</div>
@@ -131,7 +131,7 @@
                     <td>$ {{$repair->price}}</td>
                     <td>{{ucfirst($repair->category); }}</td>
                     <td>{{$repair->status}}</td>
-                    <td>{{$repair->client}}</td>
+                    <td>{{$repair->lastname . ', ' . $repair->firstname}}</td>
                     <td class="">
                      
                         <a href="" class="button-action">

@@ -12,11 +12,11 @@ class Repair extends Model
 
     protected $fillable = [
         'code',
+        'client_id',
         'description',
         'details',
         'price',
         'category',
-        'client',
         'status'
     ];
 

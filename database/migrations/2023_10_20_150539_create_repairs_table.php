@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->id();
-           $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id');
 
             $table->string('code')->nullable();
             $table->string('description');

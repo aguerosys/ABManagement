@@ -19,7 +19,11 @@ class RepairRepository
 
     public function index()
     {
-        return $this->modelRepair->orderBy('created_at', 'desc')->get();
+        return $this->modelRepair->join('clients', 'clients.id', '=', 'repairs.client_id')
+            ->orderBy('created_at', 'desc')
+            ->select('repairs.*', 'clients.firstname', 'clients.lastname')
+            ->get()
+        ;
     }   
     
     public function store(StoreRepairRequest $request)
@@ -30,7 +34,7 @@ class RepairRepository
             'details' => $request->details,
             'price' => $request->price,
             'category' => $request->category,
-            'client' => $request->client,
+            'client_id' => $request->client_id,
             'status' => 'Pendiente'
         ]);
 
@@ -41,6 +45,32 @@ class RepairRepository
         Repair::where('id', $repairCreate->id)->update([
             'code' => $code
         ]);
+
+        return $repairCreate;
     }
-    
+
+    public function doneState(Repair $repair)
+    {
+        return $repair->update([
+            'status' => 'Terminado'
+        ]);
+
+    }
+    public function processState(Repair $repair)
+    {
+        return $repair->update([
+            'status' => 'En proceso'
+        ]);
+
+
+    }
+
+    public function pendingState(Repair $repair)
+    {
+
+        return $repair->update([
+            'status' => 'Pendiente'
+        ]);
+
+    }
 }

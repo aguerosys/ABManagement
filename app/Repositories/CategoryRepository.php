@@ -20,7 +20,7 @@ class CategoryRepository
     
     public function index()
     {
-        return $this->modelCategory->orderBy('created_at', 'desc')->get();
+        return $this->modelCategory->all();
     }
 
     public function store(StoreCategoryRequest $request)

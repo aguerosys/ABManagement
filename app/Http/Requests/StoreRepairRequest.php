@@ -25,6 +25,7 @@ class StoreRepairRequest extends FormRequest
     {
         return [
             'description' => ['required'],
+            'client_id' => ['required'],
             'category' => ['required'],
             'details' => ['nullable'],
             'price' => ['nullable'],
